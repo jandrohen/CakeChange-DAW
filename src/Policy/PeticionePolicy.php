@@ -20,8 +20,7 @@ class PeticionePolicy
      */
     public function canAdd(IdentityInterface $user, Peticione $peticione)
     {
-        if($user['role'] == 'admin')return true;
-        return false;
+        return true;
     }
 
     /**

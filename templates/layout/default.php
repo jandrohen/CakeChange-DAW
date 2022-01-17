@@ -1,5 +1,5 @@
 <?php
-
+$this->loadHelper('Authentication.Identity');
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -72,15 +72,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     <div class="arrange arrange-middle">
                         <div class="arrange-fill">
                             <ul class="list-inline">
-                                <li class="mrs xs-mrxxs"><a href="<?= $this->Url->build('/')?>peticiones" aria-label="Change.org" class="header-height link-stealth"><span class="symbol symbol-wordmark type-branded symbol-xxl" aria-hidden="true"></span></a></li>
+                                <li class="mrs xs-mrxxs"><a href="<?= $this->Url->build('/') ?>" aria-label="Change.org" class="header-height link-stealth"><span class="symbol symbol-wordmark type-branded symbol-xxl" aria-hidden="true"></span></a></li>
                                 <li class="mrm hidden-xs hidden-sm">
                                     <div class="nav">
                                         <ul class="list-inline">
                                             <li class="mrs"><a href="<?= $this->Url->build('/') ?>peticiones/add" class="js-header-sap-link link-stealth header-height"><span>Inicia
                                                         una petición</span></a>
                                             </li>
-                                            <li class="mrs"><a href="login_or_join/redirectedcd24.html" class="link-stealth header-height"><span>Mis peticiones</span></a>
-                                            </li>
+                                            <?php if ($this->Identity->isLoggedIn()) { ?>
+                                                <li class="mrs"><a href="<?= $this->Url->build('/') ?>peticiones" class="link-stealth header-height"><span>Mis peticiones</span></a>
+                                                </li>
+                                            <?php } ?>
                                             <li class="mrs"><a href="petitions.html" data-pass-thru="true" class="link-stealth header-height"><span>Más peticiones</span></a>
                                             </li>
                                             <li class="js-membership"><a href="s/socios2d5c.html?source_location=member_link_header" class="link-stealth header-height"><span>Programa de
@@ -95,112 +97,89 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                                 <tbody>
                                     <tr>
                                         <td class="hidden-xs hidden-sm pvn prl"><a aria-label="Buscar" href="search.html" class="link-stealth js-search-link"><span class="symbol symbol-search symbol-l symbol-compact" aria-hidden="true"></span></a></td>
-                                        <td class="pan hidden-xs hidden-sm"><a href="<?= $this->Url->build('/') ?>users/login"
-                        class="js-header-login link link-stealth type-no-wrap mbxxxs display-inline-block">Entrar</a>
-                    </td>
-                    <td class="pan">
-                      <div class="visible-xs visible-sm">
-                        <div class="dropdown"><button data-toggle="dropdown"
-                            class="site-header-dropdown-trigger link-stealth header-height media-inline type-no-wrap">
-                            <div class="media-inline-img mrn mbxxxs"></div><span
-                              class="symbol symbol-menu symbol-compact visible-xs-inline-block visible-sm-inline-block type-ellipsis media-inline-body mlxs header-height"
-                              aria-hidden="true"></span>
-                          </button>
-                          <ul
-                            class="site-header-profile-dropdown pas dropdown-menu dropdown-menu-right bubble bubble-outline-basic bubble-tr border-rounded-b box-shadow bg-brighter xs-mtn">
-                            <div class="visible-xs visible-sm">
-                              <li class="mbxs"><a href="start-a-petition4c49.html?source_location=header"
-                                  class="js-header-sap-link link-block link-stealth type-ellipsis"><span>Inicia una
-                                    petición</span></a></li>
-                              <li class="js-membership mbxs"><a
-                                  href="s/socios2d5c.html?source_location=member_link_header"
-                                  class="link-block link-stealth type-ellipsis"><span>Programa de socios/as</span></a>
-                              </li>
-                              <li class="mbxs"><a href="petitions.html"
-                                  class="link-block link-stealth type-ellipsis"><span>Más peticiones</span></a></li>
-                              <li class="mbs"><a href="search.html"
-                                  class="link-block link-stealth type-ellipsis js-search-link"><span>Buscar</span></a>
-                              </li>
-                            </div>
-                            <li>
-                              <hr class="mvn">
-                              <div class="ptxs mtxxs"><a href="login_or_joinc448.html?user_flow=nav"
-                                  data-pass-thru="true" class="type-s link">Entra o regístrate</a></div>
-                            </li>
-                          </ul>
+                                        <?php if ($this->Identity->isLoggedIn()) { ?>
+                                            <td class="pan hidden-xs hidden-sm"><a href="<?= $this->Url->build('/') ?>users/logout" class="js-header-login link link-stealth type-no-wrap mbxxxs display-inline-block">Salir</a>
+                                            </td>
+                                        <?php } else { ?>
+
+                                            <td class="pan hidden-xs hidden-sm"><a href="<?= $this->Url->build('/') ?>users/login" class="js-header-login link link-stealth type-no-wrap mbxxxs display-inline-block">Entrar</a>
+                                            </td>
+                                        <?php } ?>
+                                        <td class="pan">
+                                            <div class="visible-xs visible-sm">
+                                                <div class="dropdown"><button data-toggle="dropdown" class="site-header-dropdown-trigger link-stealth header-height media-inline type-no-wrap">
+                                                        <div class="media-inline-img mrn mbxxxs"></div><span class="symbol symbol-menu symbol-compact visible-xs-inline-block visible-sm-inline-block type-ellipsis media-inline-body mlxs header-height" aria-hidden="true"></span>
+                                                    </button>
+                                                    <ul class="site-header-profile-dropdown pas dropdown-menu dropdown-menu-right bubble bubble-outline-basic bubble-tr border-rounded-b box-shadow bg-brighter xs-mtn">
+                                                        <div class="visible-xs visible-sm">
+                                                            <li class="mbxs"><a href="start-a-petition4c49.html?source_location=header" class="js-header-sap-link link-block link-stealth type-ellipsis"><span>Inicia una
+                                                                        petición</span></a></li>
+                                                            <li class="js-membership mbxs"><a href="s/socios2d5c.html?source_location=member_link_header" class="link-block link-stealth type-ellipsis"><span>Programa de socios/as</span></a>
+                                                            </li>
+                                                            <li class="mbxs"><a href="petitions.html" class="link-block link-stealth type-ellipsis"><span>Más peticiones</span></a></li>
+                                                            <li class="mbs"><a href="search.html" class="link-block link-stealth type-ellipsis js-search-link"><span>Buscar</span></a>
+                                                            </li>
+                                                        </div>
+                                                        <li>
+                                                            <hr class="mvn">
+                                                            <div class="ptxs mtxxs"><a href="login_or_joinc448.html?user_flow=nav" data-pass-thru="true" class="type-s link">Entra o regístrate</a></div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <hr class="mvn">
-      <div class="modal hide-fully" data-view="components/modal" data-dismiss_classes="js-dismiss-login-or-join"
-        data-classes="modal-small" data-name="login-modal"
-        data-_block="&lt;div class=&quot;components-login&quot; data-view=&quot;components/login_or_join&quot; data-name=&quot;login-or-join&quot;&gt;&lt;div class=&quot;form&quot; data-view=&quot;components/login_or_join/login&quot; data-show_saved_payment_info_text=&quot;&quot; data-hide_signup_link=&quot;&quot; data-allow_guest_login=&quot;&quot; data-prefilled_email=&quot;&quot;&gt;&lt;div class=&quot;form&quot; data-view=&quot;components/login_or_join/login_header&quot; data-show_saved_payment_info_text=&quot;&quot; data-hide_signup_link=&quot;&quot; data-context=&quot;&quot;&gt;&lt;div class=&quot;txt-c mbl&quot;&gt;&lt;h3 class=&quot;mtn&quot;&gt;Entra&lt;/h3&gt;&lt;p&gt;¿No tienes una cuenta?&amp;nbsp;&lt;a class=&quot;js-sign-up&quot;&gt;Regístrate&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;button class=&quot;btn btn-big btn-full google-login js-google-login mbxs&quot;&gt;&lt;div class=&quot;logo-tile&quot;&gt;&lt;img src=_https_/s3.amazonaws.com/change-assets/iconography/Icon_google.png___/div__span_Entra.html con Google&lt;/span&gt;&lt;/button&gt;&lt;button class=&quot;btn btn-big btn-fb btn-full facebook-btn js-facebook-login&quot;&gt;&lt;span class=&quot;symbol symbol-facebook mrs&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Entra con Facebook&lt;/button&gt;&lt;div class=&quot;text-bar text-bar-center&quot;&gt;&lt;h5 class=&quot;mvn text&quot;&gt;ó&lt;/h5&gt;&lt;/div&gt;&lt;form method=&quot;post&quot; class=&quot;login&quot;&gt;&lt;div class=&quot;grouped-form&quot;&gt;&lt;div class=&quot;control-group&quot; data-view=&quot;components/input&quot; data-value=&quot;&quot; data-autofocus=&quot;true&quot; data-placeholder=&quot;Email&quot; data-autocapitalize=&quot;off&quot; data-autocorrect=&quot;off&quot; data-name=&quot;email&quot; data-type=&quot;email&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;span class=&quot;input bg-brighter&quot;&gt;&lt;input autofocus=&quot;true&quot; placeholder=&quot;Email&quot; autocapitalize=&quot;off&quot; autocorrect=&quot;off&quot; name=&quot;email&quot; type=&quot;email&quot;&gt;&lt;/input&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;control-group&quot; data-view=&quot;components/input&quot; data-placeholder=&quot;Contraseña&quot; data-name=&quot;password&quot; data-type=&quot;password&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;span class=&quot;input bg-brighter&quot;&gt;&lt;input placeholder=&quot;Contraseña&quot; name=&quot;password&quot; type=&quot;password&quot;&gt;&lt;/input&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;mtxs type-s txt-r&quot;&gt;&lt;a class=&quot;js-forgot-password&quot;&gt;Me olvidé la contraseña&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;control-group mtm mbn&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;input value=&quot;Entra&quot; type=&quot;submit&quot; class=&quot;btn btn-full btn-action btn-big js-login-button&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/form&gt;&lt;p class=&quot;mts type-s&quot;&gt;Al registrarte o entrar vía Facebook, aceptas &lt;a href=_/policies/terms-of-service_.html class=&quot;link-subtle&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; data-pass-thru=&quot;true&quot;&gt;las normas de uso&lt;/a&gt; y la &lt;a href=_/policies/privacy_.html class=&quot;link-subtle&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; data-pass-thru=&quot;true&quot;&gt;política de privacidad&lt;/a&gt; de Change.org y aceptas recibir mensajes email de vez en cuando sobre campañas en Change.org.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;"
-        data-animation="zoom-in">
-        <div role="alert" data-testid="signup-modal" class="modal-dialog animate animate-zoom-in modal-small"><button
-            data-dismiss="modal" aria-label="Haz clic para cerrar" data-testid="modal-close"
-            class="modal-close link-stealth position-absolute position-right position-top pas js-dismiss-login-or-join"><span
-              class="symbol symbol-close symbol-compact" aria-hidden="true"></span></button>
-          <div class="components-login" data-view="components/login_or_join" data-name="login-or-join">
-            <div class="form" data-view="components/login_or_join/login" data-show_saved_payment_info_text=""
-              data-hide_signup_link="" data-allow_guest_login="" data-prefilled_email="">
-              <div class="form" data-view="components/login_or_join/login_header" data-show_saved_payment_info_text=""
-                data-hide_signup_link="" data-context="">
-                <div class="txt-c mbl">
-                  <h3 class="mtn">Entra</h3>
-                  <p>¿No tienes una cuenta?&nbsp;<a class="js-sign-up">Regístrate</a></p>
+            <hr class="mvn">
+            <div class="modal hide-fully" data-view="components/modal" data-dismiss_classes="js-dismiss-login-or-join" data-classes="modal-small" data-name="login-modal" data-_block="&lt;div class=&quot;components-login&quot; data-view=&quot;components/login_or_join&quot; data-name=&quot;login-or-join&quot;&gt;&lt;div class=&quot;form&quot; data-view=&quot;components/login_or_join/login&quot; data-show_saved_payment_info_text=&quot;&quot; data-hide_signup_link=&quot;&quot; data-allow_guest_login=&quot;&quot; data-prefilled_email=&quot;&quot;&gt;&lt;div class=&quot;form&quot; data-view=&quot;components/login_or_join/login_header&quot; data-show_saved_payment_info_text=&quot;&quot; data-hide_signup_link=&quot;&quot; data-context=&quot;&quot;&gt;&lt;div class=&quot;txt-c mbl&quot;&gt;&lt;h3 class=&quot;mtn&quot;&gt;Entra&lt;/h3&gt;&lt;p&gt;¿No tienes una cuenta?&amp;nbsp;&lt;a class=&quot;js-sign-up&quot;&gt;Regístrate&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;button class=&quot;btn btn-big btn-full google-login js-google-login mbxs&quot;&gt;&lt;div class=&quot;logo-tile&quot;&gt;&lt;img src=_https_/s3.amazonaws.com/change-assets/iconography/Icon_google.png___/div__span_Entra.html con Google&lt;/span&gt;&lt;/button&gt;&lt;button class=&quot;btn btn-big btn-fb btn-full facebook-btn js-facebook-login&quot;&gt;&lt;span class=&quot;symbol symbol-facebook mrs&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;Entra con Facebook&lt;/button&gt;&lt;div class=&quot;text-bar text-bar-center&quot;&gt;&lt;h5 class=&quot;mvn text&quot;&gt;ó&lt;/h5&gt;&lt;/div&gt;&lt;form method=&quot;post&quot; class=&quot;login&quot;&gt;&lt;div class=&quot;grouped-form&quot;&gt;&lt;div class=&quot;control-group&quot; data-view=&quot;components/input&quot; data-value=&quot;&quot; data-autofocus=&quot;true&quot; data-placeholder=&quot;Email&quot; data-autocapitalize=&quot;off&quot; data-autocorrect=&quot;off&quot; data-name=&quot;email&quot; data-type=&quot;email&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;span class=&quot;input bg-brighter&quot;&gt;&lt;input autofocus=&quot;true&quot; placeholder=&quot;Email&quot; autocapitalize=&quot;off&quot; autocorrect=&quot;off&quot; name=&quot;email&quot; type=&quot;email&quot;&gt;&lt;/input&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;control-group&quot; data-view=&quot;components/input&quot; data-placeholder=&quot;Contraseña&quot; data-name=&quot;password&quot; data-type=&quot;password&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;span class=&quot;input bg-brighter&quot;&gt;&lt;input placeholder=&quot;Contraseña&quot; name=&quot;password&quot; type=&quot;password&quot;&gt;&lt;/input&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;mtxs type-s txt-r&quot;&gt;&lt;a class=&quot;js-forgot-password&quot;&gt;Me olvidé la contraseña&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;control-group mtm mbn&quot;&gt;&lt;div class=&quot;control&quot;&gt;&lt;input value=&quot;Entra&quot; type=&quot;submit&quot; class=&quot;btn btn-full btn-action btn-big js-login-button&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/form&gt;&lt;p class=&quot;mts type-s&quot;&gt;Al registrarte o entrar vía Facebook, aceptas &lt;a href=_/policies/terms-of-service_.html class=&quot;link-subtle&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; data-pass-thru=&quot;true&quot;&gt;las normas de uso&lt;/a&gt; y la &lt;a href=_/policies/privacy_.html class=&quot;link-subtle&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot; data-pass-thru=&quot;true&quot;&gt;política de privacidad&lt;/a&gt; de Change.org y aceptas recibir mensajes email de vez en cuando sobre campañas en Change.org.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;" data-animation="zoom-in">
+                <div role="alert" data-testid="signup-modal" class="modal-dialog animate animate-zoom-in modal-small"><button data-dismiss="modal" aria-label="Haz clic para cerrar" data-testid="modal-close" class="modal-close link-stealth position-absolute position-right position-top pas js-dismiss-login-or-join"><span class="symbol symbol-close symbol-compact" aria-hidden="true"></span></button>
+                    <div class="components-login" data-view="components/login_or_join" data-name="login-or-join">
+                        <div class="form" data-view="components/login_or_join/login" data-show_saved_payment_info_text="" data-hide_signup_link="" data-allow_guest_login="" data-prefilled_email="">
+                            <div class="form" data-view="components/login_or_join/login_header" data-show_saved_payment_info_text="" data-hide_signup_link="" data-context="">
+                                <div class="txt-c mbl">
+                                    <h3 class="mtn">Entra</h3>
+                                    <p>¿No tienes una cuenta?&nbsp;<a class="js-sign-up">Regístrate</a></p>
+                                </div>
+                            </div><button class="btn btn-big btn-full google-login js-google-login mbxs">
+                                <div class="logo-tile"><img src="https://s3.amazonaws.com/change-assets/iconography/Icon_google.png">
+                                </div><span>Entra con Google</span>
+                            </button><button class="btn btn-big btn-fb btn-full facebook-btn js-facebook-login"><span class="symbol symbol-facebook mrs" aria-hidden="true"></span>Entra con Facebook</button>
+                            <div class="text-bar text-bar-center">
+                                <h5 class="mvn text">ó</h5>
+                            </div>
+                            <form method="post" class="login">
+                                <div class="grouped-form">
+                                    <div class="control-group" data-view="components/input" data-value="" data-autofocus="true" data-placeholder="Email" data-autocapitalize="off" data-autocorrect="off" data-name="email" data-type="email">
+                                        <div class="control"><span class="input bg-brighter"><input autofocus="true" placeholder="Email" autocapitalize="off" autocorrect="off" name="email" type="email"></input></span></div>
+                                    </div>
+                                    <div class="control-group" data-view="components/input" data-placeholder="Contraseña" data-name="password" data-type="password">
+                                        <div class="control"><span class="input bg-brighter"><input placeholder="Contraseña" name="password" type="password"></input></span></div>
+                                    </div>
+                                </div>
+                                <div class="mtxs type-s txt-r"><a class="js-forgot-password">Me olvidé la contraseña</a></div>
+                                <div class="control-group mtm mbn">
+                                    <div class="control"><input value="Entra" type="submit" class="btn btn-full btn-action btn-big js-login-button"></div>
+                                </div>
+                            </form>
+                            <p class="mts type-s">Al registrarte o entrar vía Facebook, aceptas <a href="policies/terms-of-service.html" class="link-subtle" target="_blank" rel="noopener noreferrer" data-pass-thru="true">las normas de uso</a> y la <a href="policies/privacy.html" class="link-subtle" target="_blank" rel="noopener noreferrer" data-pass-thru="true">política de privacidad</a> de
+                                Change.org y aceptas recibir mensajes email de vez en cuando sobre campañas en Change.org.</p>
+                        </div>
+                    </div>
                 </div>
-              </div><button class="btn btn-big btn-full google-login js-google-login mbxs">
-                <div class="logo-tile"><img src="https://s3.amazonaws.com/change-assets/iconography/Icon_google.png">
-                </div><span>Entra con Google</span>
-              </button><button class="btn btn-big btn-fb btn-full facebook-btn js-facebook-login"><span
-                  class="symbol symbol-facebook mrs" aria-hidden="true"></span>Entra con Facebook</button>
-              <div class="text-bar text-bar-center">
-                <h5 class="mvn text">ó</h5>
-              </div>
-              <form method="post" class="login">
-                <div class="grouped-form">
-                  <div class="control-group" data-view="components/input" data-value="" data-autofocus="true"
-                    data-placeholder="Email" data-autocapitalize="off" data-autocorrect="off" data-name="email"
-                    data-type="email">
-                    <div class="control"><span class="input bg-brighter"><input autofocus="true" placeholder="Email"
-                          autocapitalize="off" autocorrect="off" name="email" type="email"></input></span></div>
-                  </div>
-                  <div class="control-group" data-view="components/input" data-placeholder="Contraseña"
-                    data-name="password" data-type="password">
-                    <div class="control"><span class="input bg-brighter"><input placeholder="Contraseña" name="password"
-                          type="password"></input></span></div>
-                  </div>
-                </div>
-                <div class="mtxs type-s txt-r"><a class="js-forgot-password">Me olvidé la contraseña</a></div>
-                <div class="control-group mtm mbn">
-                  <div class="control"><input value="Entra" type="submit"
-                      class="btn btn-full btn-action btn-big js-login-button"></div>
-                </div>
-              </form>
-              <p class="mts type-s">Al registrarte o entrar vía Facebook, aceptas <a
-                  href="policies/terms-of-service.html" class="link-subtle" target="_blank" rel="noopener noreferrer"
-                  data-pass-thru="true">las normas de uso</a> y la <a href="policies/privacy.html" class="link-subtle"
-                  target="_blank" rel="noopener noreferrer" data-pass-thru="true">política de privacidad</a> de
-                Change.org y aceptas recibir mensajes email de vez en cuando sobre campañas en Change.org.</p>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="js-marketing-comms-consent-modal"></div>
+            <div class="js-marketing-comms-consent-modal"></div>
         </header>
 
         <div id="page" class="table-row table-row-expand main" role="main">
             <div id="content">
 
-                    <?= $this->Flash->render() ?>
-                    <?= $this->fetch('content') ?>
+                <?= $this->Flash->render() ?>
+                <?= $this->fetch('content') ?>
 
             </div>
         </div>
@@ -831,8 +810,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div size="lg" class="visible-lg"></div>
     </div>
     <script>
-    window.domCompleteTime = Date.now();
-  </script>
+        window.domCompleteTime = Date.now();
+    </script>
 </body>
 
 

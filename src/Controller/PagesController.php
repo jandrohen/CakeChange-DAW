@@ -70,4 +70,16 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+
+    /**
+     * Undocumented beforeFilter
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->Authentication->addUnauthenticatedActions(['display']);
+        $this->Authorization->skipAuthorization(['display']);
+       
+    }
+
 }

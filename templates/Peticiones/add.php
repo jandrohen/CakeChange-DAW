@@ -25,7 +25,7 @@
                     echo $this->Form->control('firmantes');
                     echo $this->Form->control('estado');
                     echo $this->Form->control('categorias_id', ['options' => $categorias, 'empty' => true]);
-                    echo $this->Form->control('users_id');
+                    echo $this->Form->control('user_id');
                     echo $this->Form->control('photo', ['label' => 'Portada' , 'type' => 'file']);
 
                     // echo $this->Form->control('users._ids', ['options' => $users]);

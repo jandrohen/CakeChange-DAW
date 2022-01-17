@@ -30,10 +30,12 @@ class PeticionesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
+
+        $id = $this->Authentication->getResult()->getData()->id;
         $this->paginate = [
             'contain' => ['Categorias'],
         ];
-        $peticiones = $this->paginate($this->Peticiones);
+        $peticiones = $this->paginate($this->Peticiones->find()->where(['user_id'=>$id]));
 
         $this->set(compact('peticiones'));
     }
