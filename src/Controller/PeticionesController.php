@@ -11,7 +11,7 @@ namespace App\Controller;
  */
 class PeticionesController extends AppController
 {
-        /**
+    /**
      * Initialization before method.
      **/
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -22,6 +22,7 @@ class PeticionesController extends AppController
         // actions public, skipping the authentication check
         $this->Authentication->addUnauthenticatedActions(['index', 'view']);
     }
+
     /**
      * Index method
      *
@@ -32,10 +33,32 @@ class PeticionesController extends AppController
         $this->Authorization->skipAuthorization();
 
         $id = $this->Authentication->getResult()->getData()->id;
+        $rol = $this->Authentication->getResult()->getData()->rol;
         $this->paginate = [
             'contain' => ['Categorias'],
         ];
+        if ($rol == 'admin') {
+            return $this->redirect(['action' => 'indexAdmin']);
+        }
         $peticiones = $this->paginate($this->Peticiones->find()->where(['user_id'=>$id]));
+
+        $this->set(compact('peticiones'));
+    }
+
+    /**
+     * Index admin method
+     *
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function indexAdmin()
+    {
+        $this->Authorization->skipAuthorization();
+
+        $this->paginate = [
+            'contain' => ['Categorias'],
+        ];
+
+        $peticiones = $this->paginate($this->Peticiones->find('all'));
 
         $this->set(compact('peticiones'));
     }
