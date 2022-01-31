@@ -34,6 +34,7 @@
                     <td><?= h($peticione->created) ?></td>
                     <td><?= h($peticione->updated) ?></td>
                     <td class="actions">
+                        <?= $this->Html->link(__('Change Status'), ['action' => 'status', $peticione->id]) ?>
                         <?= $this->Html->link(__('View'), ['action' => 'view', $peticione->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $peticione->id]) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $peticione->id], ['confirm' => __('Are you sure you want to delete # {0}?', $peticione->id)]) ?>

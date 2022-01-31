@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -40,7 +41,7 @@ class PeticionesController extends AppController
         if ($rol == 'admin') {
             return $this->redirect(['action' => 'indexAdmin']);
         }
-        $peticiones = $this->paginate($this->Peticiones->find()->where(['user_id'=>$id]));
+        $peticiones = $this->paginate($this->Peticiones->find()->where(['user_id' => $id]));
 
         $this->set(compact('peticiones'));
     }
@@ -88,8 +89,12 @@ class PeticionesController extends AppController
     public function add()
     {
         $peticione = $this->Peticiones->newEmptyEntity();
+        $id = $this->Authentication->getResult()->getData()->id;
         if ($this->request->is('post')) {
             $peticione = $this->Peticiones->patchEntity($peticione, $this->request->getData());
+            $peticione->estado = 'pendiente';
+            $peticione->user_id = $id;
+            $peticione->firmantes = 0;
             if ($this->Peticiones->save($peticione)) {
                 $this->Flash->success(__('The peticione has been saved.'));
 
@@ -146,5 +151,27 @@ class PeticionesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Change status method
+     *
+     * @param string|null $id Peticione id.
+     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function status($id = null)
+    {
+        $peticione = $this->Peticiones->get($id);
+        if ($peticione->estado === 'aceptada') {
+            $peticione->estado = 'pendiente';
+        } else {
+            $peticione->estado = 'aceptada';
+        }
+        if ($this->Peticiones->save($peticione)) {
+            $this->Flash->success(__('The peticione has been saved.'));
+            return $this->redirect(['action' => 'index-admin']);
+        }
+        $this->Flash->error(__('The peticione could not be saved. Please, try again.'));
     }
 }

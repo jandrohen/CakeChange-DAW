@@ -76,17 +76,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                                 <li class="mrm hidden-xs hidden-sm">
                                     <div class="nav">
                                         <ul class="list-inline">
-                                            <li class="mrs"><a href="<?= $this->Url->build('/') ?>peticiones/add" class="js-header-sap-link link-stealth header-height"><span>Inicia
-                                                        una petición</span></a>
-                                            </li>
+                                            <?php if ($this->Identity->isLoggedIn()) { ?>
+                                                <li class="mrs"><a href="<?= $this->Url->build('/') ?>peticiones/add" class="js-header-sap-link link-stealth header-height"><span>Inicia una petición</span></a>
+                                                </li>
+                                            <?php } else { ?>
+                                                <li class="mrs"><a href="<?= $this->Url->build('/') ?>users/login" class="js-header-sap-link link-stealth header-height"><span>Inicia una petición</span></a>
+                                                </li>
+                                            <?php }  ?>
+
                                             <?php if ($this->Identity->isLoggedIn()) { ?>
                                                 <li class="mrs"><a href="<?= $this->Url->build('/') ?>peticiones" class="link-stealth header-height"><span>Mis peticiones</span></a>
                                                 </li>
-                                            <?php } ?>
-                                            <li class="mrs"><a href="petitions.html" data-pass-thru="true" class="link-stealth header-height"><span>Más peticiones</span></a>
-                                            </li>
-                                            <li class="js-membership"><a href="s/socios2d5c.html?source_location=member_link_header" class="link-stealth header-height"><span>Programa de
-                                                        socios/as</span></a></li>
+                                            <?php } else { ?>
+                                                <li class="mrs"><a href="<?= $this->Url->build('/') ?>users/login" class="link-stealth header-height"><span>Mis peticiones</span></a>
+                                                </li>
+                                            <?php }  ?>
                                         </ul>
                                     </div>
                                 </li>

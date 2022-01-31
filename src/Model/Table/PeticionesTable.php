@@ -99,15 +99,6 @@ class PeticionesTable extends Table
             ->requirePresence('destinatario', 'create')
             ->notEmptyString('destinatario');
 
-        $validator
-            ->integer('firmantes')
-            ->notEmptyString('firmantes');
-
-        $validator
-            ->scalar('estado')
-            ->requirePresence('estado', 'create')
-            ->notEmptyString('estado');
-
         return $validator;
     }
 
